@@ -10,9 +10,6 @@ class FlightsReservationsManager:
     self._flightsTableName = 'flights_reservations'
     self._reservations = []
 
-  # def __del__(self):
-  #   self._connection.close()
-
   def getReservationsForDestination(self, country, city = None):
     self._validateInputType(country, city)
     self.fetchReservationsFromSourceAndSaveLocally()
@@ -47,6 +44,7 @@ class FlightsReservationsManager:
     # to raise an HTTPError if the response is an http error
     response.raise_for_status()
 
+    # save returned reservations in instance attribute
     self._reservations = []
     responseJson = response.json()
     for reservation in responseJson:
