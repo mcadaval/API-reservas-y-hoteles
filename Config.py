@@ -8,7 +8,9 @@ class Config:
     self.clientSecret = configJson['clientSecret']
     self.backgroundJobActivated = configJson['backgroundJobActivated']
     self.backgroundJobInterval = configJson['backgroundJobInterval']
+    self.backgroundJobLogfile = configJson['backgroundJobLogfile']
     self.debug = configJson['debug']
+    self.showErrorLogs = configJson['showErrorLogs']
     self.connection = None
 
   def getDatabaseConnection(self):

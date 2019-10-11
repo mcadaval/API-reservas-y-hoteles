@@ -4,6 +4,8 @@ from FlightsReservationsManager import FlightsReservationsManager
 from HotelsManager import HotelsManager
 from requests import exceptions
 from cfg import productionConfig
+import logging
+import os
 
 def createApp(config):
   app = Flask(__name__)
@@ -22,31 +24,45 @@ def createApp(config):
     
     except exceptions.HTTPError as e:
       # use status code returned by the consumed apis, when is an error status
-      print(repr(e))
+      if config.showErrorLogs:
+        app.logger.error(repr(e))
       abort(e.response.status_code)
     except ValueError as e:
       # status code 400 when is an input error
-      print(repr(e))
+      if config.showErrorLogs:
+        app.logger.error(repr(e))
       abort(400)
     except Exception as e:
       # status code 500 when other exception is thrown
-      print(repr(e))
+      if config.showErrorLogs:
+        app.logger.error(repr(e))
       abort(500)
   
   return app
 
-def backgroundJob(connection):
+def backgroundJob(config, logger):
   try:
-    print("Running background job")
-    flightsManager = FlightsReservationsManager(connection)
+    logger.debug('Requesting flights reservations and saving them in database.')
+    flightsManager = FlightsReservationsManager(config.getDatabaseConnection())
     flightsManager.fetchReservationsFromSourceAndSaveLocally()
   
   except Exception as e:
-    print(repr(e))
+    if config.showErrorLogs:
+      logger.error(repr(e))
+
+def setUpLoggerForBackgroundJob(config):
+  logger = logging.getLogger('backgroundJobLogger')
+  hdlr = logging.FileHandler(os.path.dirname(os.path.abspath(__file__)) + '/' + config.backgroundJobLogfile)
+  formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+  hdlr.setFormatter(formatter)
+  logger.addHandler(hdlr) 
+  logger.setLevel(logging.DEBUG)
+  return logger
 
 def setUpBackgroundJob(config):
+  logger = setUpLoggerForBackgroundJob(config)
   scheduler = BackgroundScheduler()
-  scheduler.add_job(backgroundJob, 'interval', seconds = config.backgroundJobInterval, args = (config.getDatabaseConnection(),))
+  scheduler.add_job(backgroundJob, 'interval', seconds = config.backgroundJobInterval, args = (config, logger))
   scheduler.start()
 
 def initializeApp(app, config):
