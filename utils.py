@@ -3,22 +3,12 @@ import json
 
 def setUpDatabase(mysqlConnection, database):
   cursor = mysqlConnection.cursor()
-  fullDumpFilename = os.path.dirname(os.path.abspath(__file__)) + '/databaseStructure.sql'
+  fullDumpFilename = os.path.dirname(os.path.abspath(__file__)) + '/db/databaseSchema.sql'
   file = open(fullDumpFilename)
+  # read file content (queries) and replace the default db name for the given one
   sqlQueries = file.read().replace('api_database', database)
   cursor.execute(sqlQueries, multi = True)
   file.close()
-
-  # for result in cursor.execute(sqlQueries, multi=True):
-  #   if result.with_rows:
-  #     print("Rows produced by statement '{}':".format(
-  #       result.statement))
-  #     print(result.fetchall())
-  #   else:
-  #     print("Number of rows affected by statement '{}': {}".format(
-  #       result.statement, result.rowcount))
-  # connection.close()
-  # file.close()
 
 def dropDatabase(mysqlConnection, database):
   cursor = mysqlConnection.cursor()
@@ -30,12 +20,12 @@ def truncateTable(mysqlConnection, table):
   query = "TRUNCATE TABLE `" + table + "`";
   cursor.execute(query)
 
-def setUpDatabaseContent(connection, dumpFilename):
-  cursor = connection.cursor()
+def setUpDatabaseContent(mysqlConnection, dumpFilename):
+  cursor = mysqlConnection.cursor()
   file = open(dumpFilename)
   sqlQueries = file.read()
   cursor.execute(sqlQueries, multi = True)
-  connection.commit()
+  mysqlConnection.commit()
   file.close()
 
 def setUpMockResponse(mockResponse, HTTPstatusCode, responseContentFile, sideEffect = None):

@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "code": 500,
+    "errorType": "internal_server_error",
+    "errorDetail": "Internal Server Error",
+    "requestId": "5d9f2025bf7dde002c2az39c"
+  },
+  "response": {}
+}

@@ -1,0 +1,9 @@
+{
+  "meta": {
+    "code": 400,
+    "errorType": "failed_geocode",
+    "errorDetail": "Couldn't geocode param near: invalidCountry",
+    "requestId": "5d9f2025bf7dde002c2ae39c"
+  },
+  "response": {}
+}

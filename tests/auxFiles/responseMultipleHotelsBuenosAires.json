@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "code": 200,
+    "requestId": "5d9f1eeb89b06a002c858824"
+  },
+  "response": {
+    "venues": [
+      {
+        "id": "4b058714f964a520847e22e3",
+        "name": "Sheraton Buenos Aires Hotel & Convention Center",
+        "location": {
+          "address": "San Martín 1225\/1275",
+          "crossStreet": "esq. Av. Leandro N. Alem",
+          "lat": -34.5930539486491,
+          "lng": -58.37246954441065,
+          "labeledLatLngs": [
+            {
+              "label": "display",
+              "lat": -34.5930539486491,
+              "lng": -58.37246954441065
+            }
+          ],
+          "postalCode": "1104",
+          "cc": "AR",
+          "city": "Buenos Aires",
+          "state": "Buenos Aires F.D.",
+          "country": "Argentina",
+          "formattedAddress": [
+            "San Martín 1225\/1275 (esq. Av. Leandro N. Alem)",
+            "1104 Buenos Aires",
+            "Buenos Aires F.D.",
+            "Argentina"
+          ]
+        },
+        "categories": [
+          {
+            "id": "4bf58dd8d48988d1fa931735",
+            "name": "Hotel",
+            "pluralName": "Hotels",
+            "shortName": "Hotel",
+            "icon": {
+              "prefix": "https:\/\/ss3.4sqi.net\/img\/categories_v2\/travel\/hotel_",
+              "suffix": ".png"
+            },
+            "primary": true
+          }
+        ],
+        "referralId": "v-1570709228",
+        "hasPerk": false
+      },
+      {
+        "id": "4b058714f964a5207a7e22e3",
+        "name": "Four Seasons Hotel Buenos Aires",
+        "location": {
+          "address": "Posadas 1086\/88",
+          "crossStreet": "esq. Cerrito",
+          "lat": -34.59027103803214,
+          "lng": -58.38251371563501,
+          "labeledLatLngs": [
+            {
+              "label": "display",
+              "lat": -34.59027103803214,
+              "lng": -58.38251371563501
+            }
+          ],
+          "postalCode": "C1011ABB",
+          "cc": "AR",
+          "city": "Buenos Aires",
+          "state": "Buenos Aires F.D.",
+          "country": "Argentina",
+          "formattedAddress": [
+            "Posadas 1086\/88 (esq. Cerrito)",
+            "C1011ABB Buenos Aires",
+            "Buenos Aires F.D.",
+            "Argentina"
+          ]
+        },
+        "categories": [
+          {
+            "id": "4bf58dd8d48988d1fa931735",
+            "name": "Hotel",
+            "pluralName": "Hotels",
+            "shortName": "Hotel",
+            "icon": {
+              "prefix": "https:\/\/ss3.4sqi.net\/img\/categories_v2\/travel\/hotel_",
+              "suffix": ".png"
+            },
+            "primary": true
+          }
+        ],
+        "referralId": "v-1570709228",
+        "hasPerk": false
+      },
+      {
+        "id": "4b058715f964a520da7e22e3",
+        "name": "Hotel Madero",
+        "location": {
+          "address": "Rosario Vera Peñaloza 360",
+          "crossStreet": "e\/ Olga Cossettini y Juana Manso",
+          "lat": -34.61752559530132,
+          "lng": -58.362313209155666,
+          "labeledLatLngs": [
+            {
+              "label": "display",
+              "lat": -34.61752559530132,
+              "lng": -58.362313209155666
+            }
+          ],
+          "postalCode": "C1107CLA",
+          "cc": "AR",
+          "city": "Buenos Aires",
+          "state": "Buenos Aires F.D.",
+          "country": "Argentina",
+          "formattedAddress": [
+            "Rosario Vera Peñaloza 360 (e\/ Olga Cossettini y Juana Manso)",
+            "C1107CLA Buenos Aires",
+            "Buenos Aires F.D.",
+            "Argentina"
+          ]
+        },
+        "categories": [
+          {
+            "id": "4bf58dd8d48988d1fa931735",
+            "name": "Hotel",
+            "pluralName": "Hotels",
+            "shortName": "Hotel",
+            "icon": {
+              "prefix": "https:\/\/ss3.4sqi.net\/img\/categories_v2\/travel\/hotel_",
+              "suffix": ".png"
+            },
+            "primary": true
+          }
+        ],
+        "venuePage": {
+          "id": "40061987"
+        },
+        "referralId": "v-1570709228",
+        "hasPerk": false
+      }
+    ]
+  }
+}
