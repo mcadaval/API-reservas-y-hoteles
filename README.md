@@ -9,11 +9,16 @@ Pequeña API que dado un destino como parámetro retorna un JSON con dos campos:
 
 * MySQL Server
 * Python3
-* Librerias varias de Python provistas en requirements.txt
+* Pip3
+* Librerias varias de Python provistas en `requirements.txt`.
 
 ## Instalación y configuración
 
- Una vez clonado el repositorio ubicarse en el directorio principal. Ingresar al archivo de configuración de nombre `cfg.py` y editar los parámetros de la conexión de la base de datos como corresponda del JSON correspondiente a la variable de nombre `productionConfigParameters`. Ejemplo:
+ Una vez clonado el repositorio ubicarse en el directorio principal y ejecutar el siguiente comando, para instalar los módulos de Python necesarios:
+
+`pip install -r requirements.txt`
+ 
+ Luego, ingresar al archivo de configuración de nombre `cfg.py` y editar los parámetros de la conexión de la base de datos como corresponda, del JSON asociado a la variable de nombre `productionConfigParameters`. Ejemplo:
 
 `'mysqlArguments' : {
   'host' : 'localhost',
@@ -80,15 +85,12 @@ Por ejemplo: `python testHotelsManager.py`
 
 - Incorporé el uso de una base de datos para preservar localmente las reservas. Esto además permite hacer consultas rápidas y extraer las reservas ya ordenas por fecha.
 - En la tabla `flights_reservations` definí un id independiente del id propio de la reserva para que sea más robusto. Si la API proveedora presentara algún error o repitiera algún id por algún motivo, todo sigue funcionando (por eso tampoco le puse UNIQUE al campo `reservation_id` de la tabla).
-- Cuando cualquiera de las apis que consumo falla, capturo el error y muestro el mensaje correspondiente. Una opción posible para el caso de que falle la api de Heroku podría ser registrar el error, pero aún así retornar un resultado extraido de la base de datos (aunque este no sería actualizado)
-- En la ejecución de fondo que consume los datos de la api de Heroku (para que no se pierdan), si hay un error solo se registra, pero no muere por una cuestión lógica, de que debe seguir intentando consumir las reservas.
-- Utilizo el contenido de 'formattedAddress' provisto como respuesta de la api foursquare, en lugar de 'address', ya que si se consulta por un pais como destino (es decir, sin dar una ciudad particular) la dirección a secas podria ser ambigua. Con la dirección completa, queda más claro.
-- No guardo datos de foursquare en base de datos porque no parece necesario. Además mantener la tabla actualizada tendría un costo adicional
-- Cuando se le hace un request a la api, se manda un request a las 2 apis consumidas en el momento, para devolver información lo más actualizada posible.
-- Si bien la clase VenuesAPIClient podría contar con más métodos para utilizar todas las formas y parámetros de consulta que ofrece la API, solo implementé un único método, ya que es suficiente para el desarrollo de esta api.
-
-Comentarios sobre los tests:
-- No agregué tests para verificar que se lance HTTPError cuando falle el request a alguna de las apis, porque de eso se encarga la librería requests, mediante "response.raise_for_status()". Además como estoy mockeando los responses no puedo invocar a la verdadera función, y tampoco tiene sentido lanzar una excepción desde el objeto mock, ya que no testea la funcionalidad real.
-- Ya que mockeamos los requests.get no se estaría testeando el armado de la url. Lo hice de esta forma, considerando que nos metemos demasiado dentro de la implementación específica del método. Si aún asi quisiera testearse, se podría agregar lógica a la función mockeada para que valide la url que recibe contra alguna esperada que se podría pasar como argumento adicional en la función auxiliar setUpMockRequest.
-- No agregué tests de HotelsAPIClient ni de FlightsReservationsAPIClient considerando que no contienen lógica compleja que testear y que dependen del uso de internet para probar su correcto uso (usar mock requests a este nivel ya no tendría sentido)
+- Cuando cualquiera de las APIs consumidas falla, capturo el error y se devuelve como estado de la propia API. Una opción posible para el caso de que falle la api de Heroku podría ser registrar el error, pero aún así retornar un resultado extraido de la base de datos (aunque este no sería actualizado)
+- En la tarea de fondo que consume los datos de la API de reservaciones (para que no se pierdan), si hay un error solo se registra en un log, pero no se interrumpe  por una cuestión lógica, de que debe seguir intentando consumir las reservas.
+- Utilizo el contenido de `formattedAddress` provisto como respuesta de la API foursquare, en lugar de `address` (que es la dirección cortita), ya que si se consulta por un pais como destino (es decir, sin dar una ciudad particular) la dirección a secas podria ser ambigua. Con la dirección completa, queda más claro.
+- No guardo localmente los datos provistos por la API de Foursquare porque no parece necesario. Es un caso distinto al de las reservas ya que por un lado no se pierde información, y por el otro, mantener esa información localmente implicaría también la tarea de que esté actualizada, que es un costo adicional (no así con las reservaciones, ya que se acumulan y no se modifican).
+- Cuando se le hace una consulta a la api, se le envía en el momento una consulta a las 2 APIs consumidas, para devolver información lo más actualizada posible.
+- Si bien la clase VenuesAPIClient podría contar con más métodos para utilizar todas las formas y parámetros de consulta que ofrece la API de Foursquare, solo implementé un único método, ya que es suficiente para el desarrollo de esta API.
+- Desarrolle las funcionalidades mediante distinas clases, para que el diseño sea modular y el código reutilizable. Además esto me permite testear mucho más ordenadamente. 
+- No agregué tests de HotelsAPIClient ni de FlightsReservationsAPIClient considerando que no contienen lógica compleja que probar y que dependen del uso de internet para probar su correcto uso (usar mocks a este nivel ya no tendría sentido).
 
