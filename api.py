@@ -1,11 +1,13 @@
-from flask import Flask, jsonify, abort, current_app
+import os
+import sys
+sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)) + '/models/')
+from flask import Flask, jsonify, abort
 from apscheduler.schedulers.background import BackgroundScheduler
 from FlightsReservationsManager import FlightsReservationsManager
 from HotelsManager import HotelsManager
 from requests import exceptions
 from cfg import productionConfig
 import logging
-import os
 
 def createApp(config):
   app = Flask(__name__)
