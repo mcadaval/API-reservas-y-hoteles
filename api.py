@@ -66,6 +66,7 @@ def setUpBackgroundJob(config):
   scheduler = BackgroundScheduler()
   scheduler.add_job(backgroundJob, 'interval', seconds = config.backgroundJobInterval, args = (config, logger))
   scheduler.start()
+  logger.debug('Background job already set up.')
 
 def initializeApp(app, config):
   if config.backgroundJobActivated:
