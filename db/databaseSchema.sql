@@ -8,3 +8,5 @@ CREATE TABLE `flights_reservations` (
   `city` varchar(50) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `flights_reservations` ADD INDEX `country_city_idx` (`country`, `city`) USING BTREE;
